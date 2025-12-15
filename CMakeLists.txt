@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.10)
 
 project(LearnOpenGL)
 
@@ -9,19 +9,19 @@ set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 
-add_subdirectory(ThirdParty/glfw)
-add_subdirectory(ThirdParty/soil)
+add_subdirectory(3rdparty/glfw)
+add_subdirectory(3rdparty/soil)
 
-add_library(glad STATIC ThirdParty/glad/src/glad.c)
+add_library(glad STATIC 3rdparty/glad/src/glad.c)
 
 add_executable(LearnOpenGL
-        Main.cpp
+        src/main.cpp
 )
 
-target_include_directories(LearnOpenGL PRIVATE ThirdParty/glfw/include ThirdParty/glad/include)
-target_include_directories(glad PRIVATE ThirdParty/glad/include ThirdParty/glad/src)
-target_include_directories(LearnOpenGL PRIVATE ThirdParty/glm)
-target_include_directories(LearnOpenGL PRIVATE ThirdParty/soil/include)
+target_include_directories(LearnOpenGL PRIVATE 3rdparty/glfw/include 3rdparty/glad/include)
+target_include_directories(glad PRIVATE 3rdparty/glad/include 3rdparty/glad/src)
+target_include_directories(LearnOpenGL PRIVATE 3rdparty/glm)
+target_include_directories(LearnOpenGL PRIVATE 3rdparty/soil/include)
 target_link_libraries(LearnOpenGL PRIVATE glad glfw soil)
 
 if(APPLE)
