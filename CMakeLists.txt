@@ -16,6 +16,17 @@ add_library(glad STATIC 3rdparty/glad/src/glad.c)
 
 add_executable(LearnOpenGL
         src/main.cpp
+        src/renderer.cpp
+        src/renderer.h
+        src/vertex_buffer.cpp
+        src/vertex_buffer.h
+        src/index_buffer.cpp
+        src/index_buffer.h
+        src/vertex_buffer_layout.h
+        src/vertex_array.cpp
+        src/vertex_array.h
+        src/shader.cpp
+        src/shader.h
 )
 
 target_include_directories(LearnOpenGL PRIVATE 3rdparty/glfw/include 3rdparty/glad/include)
