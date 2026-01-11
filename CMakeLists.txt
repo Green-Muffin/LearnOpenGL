@@ -10,7 +10,6 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(3rdparty/glfw)
-add_subdirectory(3rdparty/soil)
 add_subdirectory(3rdparty/glm)
 
 add_library(glad STATIC 3rdparty/glad/src/glad.c
@@ -52,15 +51,23 @@ add_executable(LearnOpenGL
         3rdparty/stb/stb_image.h
         src/texture.cpp
         src/texture.h
+        src/tests/test.cpp
+        src/tests/test.h
+        src/tests/test_menu.cpp
+        src/tests/test_menu.h
+        src/tests/test_clear_color.cpp
+        src/tests/test_clear_color.h
+        src/tests/test_texture_2d.cpp
+        src/tests/test_texture_2d.h
 )
 
 target_include_directories(LearnOpenGL PRIVATE 3rdparty/glfw/include 3rdparty/glad/include)
 target_include_directories(glad PRIVATE 3rdparty/glad/include 3rdparty/glad/src)
 target_include_directories(LearnOpenGL PRIVATE 3rdparty/glm)
-target_include_directories(LearnOpenGL PRIVATE 3rdparty/soil/include)
 target_include_directories(LearnOpenGL PRIVATE 3rdparty/stb)
+target_include_directories(LearnOpenGL PRIVATE src)
 
-target_link_libraries(LearnOpenGL PRIVATE glad glfw soil imgui)
+target_link_libraries(LearnOpenGL PRIVATE glad glfw imgui)
 
 if(APPLE)
     target_link_libraries(LearnOpenGL PRIVATE "-framework OpenGL")
