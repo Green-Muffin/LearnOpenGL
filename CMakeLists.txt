@@ -59,6 +59,8 @@ add_executable(LearnOpenGL
         src/tests/test_clear_color.h
         src/tests/test_texture_2d.cpp
         src/tests/test_texture_2d.h
+        src/redlive/redlive.cpp
+        src/redlive/redlive.h
 )
 
 target_include_directories(LearnOpenGL PRIVATE 3rdparty/glfw/include 3rdparty/glad/include)

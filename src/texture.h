@@ -20,7 +20,7 @@ public:
 
 private:
     unsigned int texture_id_{0};
-    std::string file_path_;
+    std::string file_name_;
     unsigned char* local_buffer_;
     int width_, height_, bpp_;
 };

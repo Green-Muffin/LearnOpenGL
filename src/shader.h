@@ -35,7 +35,7 @@ private:
 
     unsigned int compile_shader_(unsigned int type, const std::string& source);
     unsigned int create_shader_(const std::string& vertex_shader, const std::string& fragment_shader);
-    ShaderProgramSource prase_shader_(const std::string& file_path);
+    ShaderProgramSource prase_shader_(const std::string& file_name);
     unsigned int get_uniform_location(const std::string& name);
 };
 

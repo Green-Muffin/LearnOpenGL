@@ -41,12 +41,12 @@ namespace tests {
 
         _index_buffer = std::make_unique<IndexBuffer>(indices, 6);
 
-        _shader = std::make_unique<Shader>("../res/shader/basic.shader");
+        _shader = std::make_unique<Shader>("basic.shader");
         _shader->bind();
         _shader->set_uniform_4f("u_color", 0.2f, 0.3f, 0.8f, 1.0f);
         _shader->set_uniform_1i("u_texture", 0);
 
-        _texture = std::make_unique<Texture>("../res/textures/ChernoLogo.png");
+        _texture = std::make_unique<Texture>("ChernoLogo.png");
 	}
 
 	TestTexture2D::~TestTexture2D() {

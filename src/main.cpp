@@ -15,8 +15,10 @@
 #include "tests/test_menu.h"
 #include "tests/test_texture_2d.h"
 
-constexpr auto kScreenWidth = 800;
-constexpr auto kScreenHeight = 600;
+#ifdef DO_MAIN
+
+constexpr auto kScreenWidth = 1080;
+constexpr auto kScreenHeight = 720;
 auto kWindowTitle = "OpenGL Window";
 
 int main() {
@@ -44,8 +46,6 @@ int main() {
     ImGui::StyleColorsDark();
 
     constexpr Renderer renderer;
-
-    tests::TestClearColor test_clear_color;
 
     tests::Test* current_test = nullptr;
     auto* test_menu = new tests::TestMenu(current_test);
@@ -87,3 +87,5 @@ int main() {
 
     glfwTerminate();
 }
+
+#endif // DO_MAIN

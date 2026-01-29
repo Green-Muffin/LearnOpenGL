@@ -11,6 +11,8 @@
 #include "glad/glad.h"
 #include "renderer.h"
 
+constexpr auto ShaderPath = "C:\\Users\\dodoe\\repos\\CppProjects\\LearnOpenGL\\res\\shader\\";
+
 Shader::Shader(const std::string& file_path) : file_path_(file_path) {
     auto [vertex_source, fragment_source] = prase_shader_(file_path);
     shader_id_ = create_shader_(vertex_source, fragment_source);
@@ -82,8 +84,9 @@ unsigned int Shader::create_shader_(const std::string &vertex_shader, const std:
     return program;
 }
 
-ShaderProgramSource Shader::prase_shader_(const std::string &file_path) {
-    std::ifstream stream(file_path);
+ShaderProgramSource Shader::prase_shader_(const std::string &file_name) {
+    const auto full_path = ShaderPath + file_name;
+    std::ifstream stream(full_path);
 
     enum class ShaderType { none = -1, vertex = 0, fragment = 1 };
 

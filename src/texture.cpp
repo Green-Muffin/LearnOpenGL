@@ -7,10 +7,13 @@
 #include "renderer.h"
 #include "stb_image.h"
 
-Texture::Texture(const std::string &file_path)
-    : file_path_(file_path), local_buffer_(nullptr), width_(0), height_(0), bpp_(0) {
+constexpr auto TexturePath = "C:\\Users\\dodoe\\repos\\CppProjects\\LearnOpenGL\\res\\textures\\";
+
+Texture::Texture(const std::string &file_name)
+    : file_name_(file_name), local_buffer_(nullptr), width_(0), height_(0), bpp_(0) {
     stbi_set_flip_vertically_on_load(1);    // Flipped to match the OpenGL texture coordinate system
-    local_buffer_ = stbi_load(file_path.c_str(), &width_, &height_, &bpp_, 4);
+    const auto full_path = TexturePath + file_name;
+    local_buffer_ = stbi_load(full_path.c_str(), &width_, &height_, &bpp_, 4);
 
     GLCall(glGenTextures(1, &texture_id_));
     GLCall(glBindTexture(GL_TEXTURE_2D, texture_id_));
