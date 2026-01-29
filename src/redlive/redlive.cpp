@@ -15,7 +15,7 @@
 
 namespace redlive {}
 
-#define DO_REDLIVE
+//#define DO_REDLIVE
 #ifdef DO_REDLIVE
 
 constexpr auto kScreenWidth = 1080;
@@ -142,7 +142,7 @@ int main() {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-// ---------------------------------------------------------------------------
+// Render：---------------------------------------------------------------------------
 
         // Step eight : Draw the elements.
         glUseProgram(shader_program);
@@ -151,7 +151,7 @@ int main() {
 
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-// ---------------------------------------------------------------------------
+// Render: ---------------------------------------------------------------------------
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

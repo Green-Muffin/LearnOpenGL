@@ -31,18 +31,22 @@ void Shader::unbind() const {
 }
 
 void Shader::set_uniform_1i(const std::string &name, const int value) {
+    bind();
     GLCall(glUniform1i(get_uniform_location(name), value));
 }
 
 void Shader::set_uniform_2f(const std::string &name, const float v0, const float v1) {
+    bind();
     GLCall(glUniform2f(get_uniform_location(name), v0, v1));
 }
 
 void Shader::set_uniform_4f(const std::string &name, const float v0, const float v1, const float v2, const float v3) {
+    bind();
     GLCall(glUniform4f(get_uniform_location(name), v0, v1, v2, v3));
 }
 
 void Shader::set_uniform_mat4f(const std::string &name, const glm::mat4 &matrix) {
+    bind();
     glUniformMatrix4fv(get_uniform_location(name), 1, GL_FALSE, &matrix[0][0]);
 }
 

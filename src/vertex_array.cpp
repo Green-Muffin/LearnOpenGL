@@ -16,7 +16,7 @@ VertexArray::~VertexArray() {
     GLCall(glDeleteVertexArrays(1, &renderer_id_));
 }
 
-void VertexArray::add_buffer(const VertexBuffer &vb, const VertexBufferLayout &layout) {
+void VertexArray::add_buffer(const VertexBuffer& vb, const VertexBufferLayout& layout) {
     bind();
     vb.bind();
     const auto& elements = layout.get_elements();

@@ -20,6 +20,7 @@ namespace tests {
         for (auto& test : tests_) {
             if (ImGui::Button(test.first.c_str())) {
                 current_test_ = test.second();
+                current_test_->on_start();
             }
         }
     }
