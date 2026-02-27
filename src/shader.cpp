@@ -23,6 +23,9 @@ Shader::~Shader() {
 }
 
 void Shader::bind() const {
+    if (shader_id_ == 0) {
+        return;
+    }
     GLCall(glUseProgram(shader_id_));
 }
 
@@ -38,6 +41,11 @@ void Shader::set_uniform_1i(const std::string &name, const int value) {
 void Shader::set_uniform_2f(const std::string &name, const float v0, const float v1) {
     bind();
     GLCall(glUniform2f(get_uniform_location(name), v0, v1));
+}
+
+void Shader::set_uniform_3f(const std::string &name, const float v0, const float v1, const float v2) {
+    bind();
+    GLCall(glUniform3f(get_uniform_location(name), v0, v1, v2));
 }
 
 void Shader::set_uniform_4f(const std::string &name, const float v0, const float v1, const float v2, const float v3) {
@@ -77,10 +85,31 @@ unsigned int Shader::create_shader_(const std::string &vertex_shader, const std:
     const unsigned int vs = compile_shader_(GL_VERTEX_SHADER, vertex_shader);
     const unsigned int fs = compile_shader_(GL_FRAGMENT_SHADER, fragment_shader);
 
+	if (vs == 0 || fs == 0) {
+		GLCall(glDeleteProgram(program));
+		return 0;
+	}
+
     GLCall(glAttachShader(program, vs));
     GLCall(glAttachShader(program, fs));
     GLCall(glLinkProgram(program));
-    GLCall(glValidateProgram(program));
+
+	int link_status = GL_FALSE;
+	GLCall(glGetProgramiv(program, GL_LINK_STATUS, &link_status));
+	if (link_status == GL_FALSE) {
+		int length = 0;
+		GLCall(glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length));
+		const auto message = static_cast<char*>(alloca(length * sizeof(char)));
+		GLCall(glGetProgramInfoLog(program, length, &length, message));
+		std::cout << "Failed to link shader program!" << std::endl;
+		std::cout << message << std::endl;
+		GLCall(glDeleteProgram(program));
+		GLCall(glDeleteShader(vs));
+		GLCall(glDeleteShader(fs));
+		return 0;
+	}
+
+	GLCall(glValidateProgram(program));
 
     GLCall(glDeleteShader(vs));
     GLCall(glDeleteShader(fs));

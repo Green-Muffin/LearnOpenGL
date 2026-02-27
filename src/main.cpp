@@ -16,6 +16,8 @@
 #include "tests/test_menu.h"
 #include "tests/test_texture_2d.h"
 #include "tests/test_3d.h"
+#include "tests/test_light.h"
+#include "tests/test_batch_render.h"
 
 #define DO_MAIN
 #ifdef DO_MAIN
@@ -75,7 +77,9 @@ int main() {
 
     test_menu->register_test<tests::TestClearColor>("ClearColor");
     test_menu->register_test<tests::TestTexture2D>("RenderTexture2D");
-    test_menu->register_test<tests::Test3D>("Render3d");
+    test_menu->register_test<tests::Test3D>("Render3D");
+    test_menu->register_test<tests::TestLight>("Light");
+    test_menu->register_test<tests::TestBatchRender>("BatchRender");
 
     while (!glfwWindowShouldClose(g_window)) {
 

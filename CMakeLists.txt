@@ -65,6 +65,10 @@ add_executable(LearnOpenGL
         src/tests/test_3d.h
         src/camera.cpp
         src/camera.h
+        src/tests/test_light.cpp
+        src/tests/test_light.h
+        src/tests/test_batch_render.cpp
+        src/tests/test_batch_render.h
 )
 
 target_include_directories(LearnOpenGL PRIVATE 3rdparty/glfw/include 3rdparty/glad/include)

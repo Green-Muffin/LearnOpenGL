@@ -33,7 +33,12 @@ public:
     template<typename T>
     void push(unsigned int count)
     {
-        // 无条件触发编译期断言，导致编译失败（通常用于占位，表明该模板不应被直接实例化）
+        static_assert(false);
+    }
+
+    template<typename T>
+    void push(unsigned int count, unsigned int stride) 
+    {
         static_assert(false);
     }
 
@@ -42,6 +47,13 @@ public:
     {
         elements_.push_back({ GL_FLOAT, count, GL_FALSE });
         stride_ += VertexBufferElement::get_size_of_type(GL_FLOAT) * count;
+    }
+
+    template<>
+    void push<float>(const unsigned int count, const unsigned int stride) 
+    {
+        elements_.push_back({ GL_FLOAT, count, GL_FALSE });
+		stride_ = stride * VertexBufferElement::get_size_of_type(GL_FLOAT);
     }
 
     template<>

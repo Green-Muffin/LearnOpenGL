@@ -33,6 +33,8 @@ public:
 
     void clear() const;
     void draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
+    void draw(const VertexArray& va, const Shader& shader) const;
+    void draw_arrays(const VertexArray& va, const Shader& shader, unsigned int first, unsigned int count, unsigned int mode = GL_TRIANGLES) const;
 
 private:
 

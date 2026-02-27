@@ -34,3 +34,16 @@ void Renderer::draw(const VertexArray& va, const IndexBuffer& ib, const Shader& 
     ib.bind();
     GLCall(glDrawElements(GL_TRIANGLES, ib.get_count(), GL_UNSIGNED_INT, nullptr));
 }
+
+void Renderer::draw(const VertexArray& va, const Shader& shader) const {
+    shader.bind();
+    va.bind();
+
+    GLCall(glDrawArrays(GL_TRIANGLES, 0, 8));  // TODO: FIXME;
+}
+
+void Renderer::draw_arrays(const VertexArray& va, const Shader& shader, unsigned int first, unsigned int count, unsigned int mode) const {
+    shader.bind();
+    va.bind();
+    GLCall(glDrawArrays(mode, first, count));
+}
