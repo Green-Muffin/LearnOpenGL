@@ -3154,7 +3154,7 @@ void _glfwGetRequiredInstanceExtensionsX11(char** extensions)
         extensions[1] = "VK_KHR_xlib_surface";
 }
 
-GLFWbool _glfwGetPhysicalDevicePresentationSupportX11(VkInstance instance,
+GLFWbool _glfwGetPhysicalDevicePresentationSupportX11(VkInstance _instance,
                                                       VkPhysicalDevice device,
                                                       uint32_t queuefamily)
 {
@@ -3166,7 +3166,7 @@ GLFWbool _glfwGetPhysicalDevicePresentationSupportX11(VkInstance instance,
         PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR
             vkGetPhysicalDeviceXcbPresentationSupportKHR =
             (PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR)
-            vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceXcbPresentationSupportKHR");
+            vkGetInstanceProcAddr(_instance, "vkGetPhysicalDeviceXcbPresentationSupportKHR");
         if (!vkGetPhysicalDeviceXcbPresentationSupportKHR)
         {
             _glfwInputError(GLFW_API_UNAVAILABLE,
@@ -3192,7 +3192,7 @@ GLFWbool _glfwGetPhysicalDevicePresentationSupportX11(VkInstance instance,
         PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR
             vkGetPhysicalDeviceXlibPresentationSupportKHR =
             (PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR)
-            vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceXlibPresentationSupportKHR");
+            vkGetInstanceProcAddr(_instance, "vkGetPhysicalDeviceXlibPresentationSupportKHR");
         if (!vkGetPhysicalDeviceXlibPresentationSupportKHR)
         {
             _glfwInputError(GLFW_API_UNAVAILABLE,
@@ -3207,7 +3207,7 @@ GLFWbool _glfwGetPhysicalDevicePresentationSupportX11(VkInstance instance,
     }
 }
 
-VkResult _glfwCreateWindowSurfaceX11(VkInstance instance,
+VkResult _glfwCreateWindowSurfaceX11(VkInstance _instance,
                                      _GLFWwindow* window,
                                      const VkAllocationCallbacks* allocator,
                                      VkSurfaceKHR* surface)
@@ -3227,7 +3227,7 @@ VkResult _glfwCreateWindowSurfaceX11(VkInstance instance,
         }
 
         vkCreateXcbSurfaceKHR = (PFN_vkCreateXcbSurfaceKHR)
-            vkGetInstanceProcAddr(instance, "vkCreateXcbSurfaceKHR");
+            vkGetInstanceProcAddr(_instance, "vkCreateXcbSurfaceKHR");
         if (!vkCreateXcbSurfaceKHR)
         {
             _glfwInputError(GLFW_API_UNAVAILABLE,
@@ -3240,7 +3240,7 @@ VkResult _glfwCreateWindowSurfaceX11(VkInstance instance,
         sci.connection = connection;
         sci.window = window->x11.handle;
 
-        err = vkCreateXcbSurfaceKHR(instance, &sci, allocator, surface);
+        err = vkCreateXcbSurfaceKHR(_instance, &sci, allocator, surface);
         if (err)
         {
             _glfwInputError(GLFW_PLATFORM_ERROR,
@@ -3257,7 +3257,7 @@ VkResult _glfwCreateWindowSurfaceX11(VkInstance instance,
         PFN_vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR;
 
         vkCreateXlibSurfaceKHR = (PFN_vkCreateXlibSurfaceKHR)
-            vkGetInstanceProcAddr(instance, "vkCreateXlibSurfaceKHR");
+            vkGetInstanceProcAddr(_instance, "vkCreateXlibSurfaceKHR");
         if (!vkCreateXlibSurfaceKHR)
         {
             _glfwInputError(GLFW_API_UNAVAILABLE,
@@ -3270,7 +3270,7 @@ VkResult _glfwCreateWindowSurfaceX11(VkInstance instance,
         sci.dpy = _glfw.x11.display;
         sci.window = window->x11.handle;
 
-        err = vkCreateXlibSurfaceKHR(instance, &sci, allocator, surface);
+        err = vkCreateXlibSurfaceKHR(_instance, &sci, allocator, surface);
         if (err)
         {
             _glfwInputError(GLFW_PLATFORM_ERROR,

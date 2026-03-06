@@ -675,8 +675,8 @@ EGLNativeDisplayType _glfwGetEGLNativeDisplayWayland(void);
 EGLNativeWindowType _glfwGetEGLNativeWindowWayland(_GLFWwindow* window);
 
 void _glfwGetRequiredInstanceExtensionsWayland(char** extensions);
-GLFWbool _glfwGetPhysicalDevicePresentationSupportWayland(VkInstance instance, VkPhysicalDevice device, uint32_t queuefamily);
-VkResult _glfwCreateWindowSurfaceWayland(VkInstance instance, _GLFWwindow* window, const VkAllocationCallbacks* allocator, VkSurfaceKHR* surface);
+GLFWbool _glfwGetPhysicalDevicePresentationSupportWayland(VkInstance _instance, VkPhysicalDevice device, uint32_t queuefamily);
+VkResult _glfwCreateWindowSurfaceWayland(VkInstance _instance, _GLFWwindow* window, const VkAllocationCallbacks* allocator, VkSurfaceKHR* surface);
 
 void _glfwFreeMonitorWayland(_GLFWmonitor* monitor);
 void _glfwGetMonitorPosWayland(_GLFWmonitor* monitor, int* xpos, int* ypos);

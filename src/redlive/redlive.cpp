@@ -13,6 +13,8 @@
 
 #include "redlive.h"
 
+GLFWwindow* g_window = nullptr;
+
 namespace redlive {}
 
 //#define DO_REDLIVE

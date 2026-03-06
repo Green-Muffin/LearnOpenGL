@@ -1283,7 +1283,7 @@ static int createNativeWindow(_GLFWwindow* window,
         WNDCLASSEXW wc = { sizeof(wc) };
         wc.style         = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
         wc.lpfnWndProc   = windowProc;
-        wc.hInstance     = _glfw.win32.instance;
+        wc.hInstance     = _glfw.win32._instance;
         wc.hCursor       = LoadCursorW(NULL, IDC_ARROW);
 #if defined(_GLFW_WNDCLASSNAME)
         wc.lpszClassName = _GLFW_WNDCLASSNAME;
@@ -1389,7 +1389,7 @@ static int createNativeWindow(_GLFWwindow* window,
                                            frameWidth, frameHeight,
                                            NULL, // No parent window
                                            NULL, // No window menu
-                                           _glfw.win32.instance,
+                                           _glfw.win32._instance,
                                            (LPVOID) wndconfig);
 
     _glfw_free(wideTitle);
@@ -2510,14 +2510,14 @@ void _glfwGetRequiredInstanceExtensionsWin32(char** extensions)
     extensions[1] = "VK_KHR_win32_surface";
 }
 
-GLFWbool _glfwGetPhysicalDevicePresentationSupportWin32(VkInstance instance,
+GLFWbool _glfwGetPhysicalDevicePresentationSupportWin32(VkInstance _instance,
                                                         VkPhysicalDevice device,
                                                         uint32_t queuefamily)
 {
     PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR
         vkGetPhysicalDeviceWin32PresentationSupportKHR =
         (PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR)
-        vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceWin32PresentationSupportKHR");
+        vkGetInstanceProcAddr(_instance, "vkGetPhysicalDeviceWin32PresentationSupportKHR");
     if (!vkGetPhysicalDeviceWin32PresentationSupportKHR)
     {
         _glfwInputError(GLFW_API_UNAVAILABLE,
@@ -2528,7 +2528,7 @@ GLFWbool _glfwGetPhysicalDevicePresentationSupportWin32(VkInstance instance,
     return vkGetPhysicalDeviceWin32PresentationSupportKHR(device, queuefamily);
 }
 
-VkResult _glfwCreateWindowSurfaceWin32(VkInstance instance,
+VkResult _glfwCreateWindowSurfaceWin32(VkInstance _instance,
                                        _GLFWwindow* window,
                                        const VkAllocationCallbacks* allocator,
                                        VkSurfaceKHR* surface)
@@ -2538,7 +2538,7 @@ VkResult _glfwCreateWindowSurfaceWin32(VkInstance instance,
     PFN_vkCreateWin32SurfaceKHR vkCreateWin32SurfaceKHR;
 
     vkCreateWin32SurfaceKHR = (PFN_vkCreateWin32SurfaceKHR)
-        vkGetInstanceProcAddr(instance, "vkCreateWin32SurfaceKHR");
+        vkGetInstanceProcAddr(_instance, "vkCreateWin32SurfaceKHR");
     if (!vkCreateWin32SurfaceKHR)
     {
         _glfwInputError(GLFW_API_UNAVAILABLE,
@@ -2548,10 +2548,10 @@ VkResult _glfwCreateWindowSurfaceWin32(VkInstance instance,
 
     memset(&sci, 0, sizeof(sci));
     sci.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
-    sci.hinstance = _glfw.win32.instance;
+    sci.hinstance = _glfw.win32._instance;
     sci.hwnd = window->win32.handle;
 
-    err = vkCreateWin32SurfaceKHR(instance, &sci, allocator, surface);
+    err = vkCreateWin32SurfaceKHR(_instance, &sci, allocator, surface);
     if (err)
     {
         _glfwInputError(GLFW_PLATFORM_ERROR,

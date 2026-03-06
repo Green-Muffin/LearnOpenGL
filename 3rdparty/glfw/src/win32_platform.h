@@ -322,7 +322,7 @@ typedef struct _GLFWcontextWGL
 //
 typedef struct _GLFWlibraryWGL
 {
-    HINSTANCE                           instance;
+    HINSTANCE                           _instance;
     PFN_wglCreateContext                CreateContext;
     PFN_wglDeleteContext                DeleteContext;
     PFN_wglGetProcAddress               GetProcAddress;
@@ -381,7 +381,7 @@ typedef struct _GLFWwindowWin32
 //
 typedef struct _GLFWlibraryWin32
 {
-    HINSTANCE           instance;
+    HINSTANCE           _instance;
     HWND                helperWindowHandle;
     ATOM                helperWindowClass;
     ATOM                mainWindowClass;
@@ -404,19 +404,19 @@ typedef struct _GLFWlibraryWin32
     HCURSOR             blankCursor;
 
     struct {
-        HINSTANCE                       instance;
+        HINSTANCE                       _instance;
         PFN_DirectInput8Create          Create;
         IDirectInput8W*                 api;
     } dinput8;
 
     struct {
-        HINSTANCE                       instance;
+        HINSTANCE                       _instance;
         PFN_XInputGetCapabilities       GetCapabilities;
         PFN_XInputGetState              GetState;
     } xinput;
 
     struct {
-        HINSTANCE                       instance;
+        HINSTANCE                       _instance;
         PFN_EnableNonClientDpiScaling   EnableNonClientDpiScaling_;
         PFN_SetProcessDpiAwarenessContext SetProcessDpiAwarenessContext_;
         PFN_GetDpiForWindow             GetDpiForWindow_;
@@ -425,7 +425,7 @@ typedef struct _GLFWlibraryWin32
     } user32;
 
     struct {
-        HINSTANCE                       instance;
+        HINSTANCE                       _instance;
         PFN_DwmIsCompositionEnabled     IsCompositionEnabled;
         PFN_DwmFlush                    Flush;
         PFN_DwmEnableBlurBehindWindow   EnableBlurBehindWindow;
@@ -433,13 +433,13 @@ typedef struct _GLFWlibraryWin32
     } dwmapi;
 
     struct {
-        HINSTANCE                       instance;
+        HINSTANCE                       _instance;
         PFN_SetProcessDpiAwareness      SetProcessDpiAwareness_;
         PFN_GetDpiForMonitor            GetDpiForMonitor_;
     } shcore;
 
     struct {
-        HINSTANCE                       instance;
+        HINSTANCE                       _instance;
         PFN_RtlVerifyVersionInfo        RtlVerifyVersionInfo_;
     } ntdll;
 } _GLFWlibraryWin32;
@@ -541,8 +541,8 @@ EGLNativeDisplayType _glfwGetEGLNativeDisplayWin32(void);
 EGLNativeWindowType _glfwGetEGLNativeWindowWin32(_GLFWwindow* window);
 
 void _glfwGetRequiredInstanceExtensionsWin32(char** extensions);
-GLFWbool _glfwGetPhysicalDevicePresentationSupportWin32(VkInstance instance, VkPhysicalDevice device, uint32_t queuefamily);
-VkResult _glfwCreateWindowSurfaceWin32(VkInstance instance, _GLFWwindow* window, const VkAllocationCallbacks* allocator, VkSurfaceKHR* surface);
+GLFWbool _glfwGetPhysicalDevicePresentationSupportWin32(VkInstance _instance, VkPhysicalDevice device, uint32_t queuefamily);
+VkResult _glfwCreateWindowSurfaceWin32(VkInstance _instance, _GLFWwindow* window, const VkAllocationCallbacks* allocator, VkSurfaceKHR* surface);
 
 void _glfwFreeMonitorWin32(_GLFWmonitor* monitor);
 void _glfwGetMonitorPosWin32(_GLFWmonitor* monitor, int* xpos, int* ypos);

@@ -19,15 +19,12 @@
 #include "tests/test_light.h"
 #include "tests/test_batch_render.h"
 
-#define DO_MAIN
 #ifdef DO_MAIN
 
 //constexpr auto kScreenWidth = 1080;
 //constexpr auto kScreenHeight = 720;
 //auto kWindowTitle = "OpenGL Window";
 #include "redlive/redlive.h"
-
-GLFWwindow* g_window = nullptr;
 
 auto first_mouse = true;
 auto yaw = -90.0f;

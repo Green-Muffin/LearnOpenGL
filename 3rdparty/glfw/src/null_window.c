@@ -710,21 +710,21 @@ void _glfwGetRequiredInstanceExtensionsNull(char** extensions)
     extensions[1] = "VK_EXT_headless_surface";
 }
 
-GLFWbool _glfwGetPhysicalDevicePresentationSupportNull(VkInstance instance,
+GLFWbool _glfwGetPhysicalDevicePresentationSupportNull(VkInstance _instance,
                                                        VkPhysicalDevice device,
                                                        uint32_t queuefamily)
 {
     return GLFW_TRUE;
 }
 
-VkResult _glfwCreateWindowSurfaceNull(VkInstance instance,
+VkResult _glfwCreateWindowSurfaceNull(VkInstance _instance,
                                       _GLFWwindow* window,
                                       const VkAllocationCallbacks* allocator,
                                       VkSurfaceKHR* surface)
 {
     PFN_vkCreateHeadlessSurfaceEXT vkCreateHeadlessSurfaceEXT =
         (PFN_vkCreateHeadlessSurfaceEXT)
-        vkGetInstanceProcAddr(instance, "vkCreateHeadlessSurfaceEXT");
+        vkGetInstanceProcAddr(_instance, "vkCreateHeadlessSurfaceEXT");
     if (!vkCreateHeadlessSurfaceEXT)
     {
         _glfwInputError(GLFW_API_UNAVAILABLE,
@@ -736,7 +736,7 @@ VkResult _glfwCreateWindowSurfaceNull(VkInstance instance,
     memset(&sci, 0, sizeof(sci));
     sci.sType = VK_STRUCTURE_TYPE_HEADLESS_SURFACE_CREATE_INFO_EXT;
 
-    const VkResult err = vkCreateHeadlessSurfaceEXT(instance, &sci, allocator, surface);
+    const VkResult err = vkCreateHeadlessSurfaceEXT(_instance, &sci, allocator, surface);
     if (err)
     {
         _glfwInputError(GLFW_PLATFORM_ERROR,

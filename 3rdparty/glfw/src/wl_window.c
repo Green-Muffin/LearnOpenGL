@@ -3270,14 +3270,14 @@ void _glfwGetRequiredInstanceExtensionsWayland(char** extensions)
     extensions[1] = "VK_KHR_wayland_surface";
 }
 
-GLFWbool _glfwGetPhysicalDevicePresentationSupportWayland(VkInstance instance,
+GLFWbool _glfwGetPhysicalDevicePresentationSupportWayland(VkInstance _instance,
                                                           VkPhysicalDevice device,
                                                           uint32_t queuefamily)
 {
     PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR
         vkGetPhysicalDeviceWaylandPresentationSupportKHR =
         (PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR)
-        vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceWaylandPresentationSupportKHR");
+        vkGetInstanceProcAddr(_instance, "vkGetPhysicalDeviceWaylandPresentationSupportKHR");
     if (!vkGetPhysicalDeviceWaylandPresentationSupportKHR)
     {
         _glfwInputError(GLFW_API_UNAVAILABLE,
@@ -3290,7 +3290,7 @@ GLFWbool _glfwGetPhysicalDevicePresentationSupportWayland(VkInstance instance,
                                                             _glfw.wl.display);
 }
 
-VkResult _glfwCreateWindowSurfaceWayland(VkInstance instance,
+VkResult _glfwCreateWindowSurfaceWayland(VkInstance _instance,
                                          _GLFWwindow* window,
                                          const VkAllocationCallbacks* allocator,
                                          VkSurfaceKHR* surface)
@@ -3300,7 +3300,7 @@ VkResult _glfwCreateWindowSurfaceWayland(VkInstance instance,
     PFN_vkCreateWaylandSurfaceKHR vkCreateWaylandSurfaceKHR;
 
     vkCreateWaylandSurfaceKHR = (PFN_vkCreateWaylandSurfaceKHR)
-        vkGetInstanceProcAddr(instance, "vkCreateWaylandSurfaceKHR");
+        vkGetInstanceProcAddr(_instance, "vkCreateWaylandSurfaceKHR");
     if (!vkCreateWaylandSurfaceKHR)
     {
         _glfwInputError(GLFW_API_UNAVAILABLE,
@@ -3313,7 +3313,7 @@ VkResult _glfwCreateWindowSurfaceWayland(VkInstance instance,
     sci.display = _glfw.wl.display;
     sci.surface = window->wl.surface;
 
-    err = vkCreateWaylandSurfaceKHR(instance, &sci, allocator, surface);
+    err = vkCreateWaylandSurfaceKHR(_instance, &sci, allocator, surface);
     if (err)
     {
         _glfwInputError(GLFW_PLATFORM_ERROR,
