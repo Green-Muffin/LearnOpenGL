@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(LearnOpenGL)
+project(LearnVulkan)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -21,7 +21,7 @@ add_subdirectory(3rdparty/glfw)
 add_subdirectory(3rdparty/glm)
 
 add_library(glad STATIC 3rdparty/glad/src/glad.c
-        3rdparty/stb/stb_image.cpp)
+        3rdparty/stb/stb_image.cpp "src/Graphics/Render/Shader.cpp")
 
 add_library(imgui STATIC
         3rdparty/imgui/imgui.cpp
@@ -32,7 +32,7 @@ add_library(imgui STATIC
         3rdparty/imgui/backends/imgui_impl_glfw.cpp
         3rdparty/imgui/backends/imgui_impl_opengl3.cpp
         3rdparty/imgui/backends/imgui_impl_vulkan.cpp
-)
+ "src/Graphics/Render/Shader.cpp")
 
 target_include_directories(imgui PUBLIC
         3rdparty/imgui
@@ -44,71 +44,39 @@ target_compile_definitions(imgui PUBLIC IMGUI_IMPL_OPENGL_LOADER_GLAD)
 
 target_link_libraries(imgui PUBLIC glfw glad ${Vulkan_LIBRARIES})
 
-add_executable(LearnOpenGL
-        src/main.cpp
-        src/renderer.cpp
-        src/renderer.h
-        src/vertex_buffer.cpp
-        src/vertex_buffer.h
-        src/index_buffer.cpp
-        src/index_buffer.h
-        src/vertex_buffer_layout.h
-        src/vertex_array.cpp
-        src/vertex_array.h
-        src/shader.cpp
-        src/shader.h
+add_executable(LearnVulkan
         3rdparty/stb/stb_image.cpp
         3rdparty/stb/stb_image.h
-        src/texture.cpp
-        src/texture.h
-        src/tests/test.cpp
-        src/tests/test.h
-        src/tests/test_menu.cpp
-        src/tests/test_menu.h
-        src/tests/test_clear_color.cpp
-        src/tests/test_clear_color.h
-        src/tests/test_texture_2d.cpp
-        src/tests/test_texture_2d.h
-        src/redlive/redlive.cpp
-        src/redlive/redlive.h
-        src/tests/test_3d.cpp
-        src/tests/test_3d.h
-        src/camera.cpp
-        src/camera.h
-        src/tests/test_light.cpp
-        src/tests/test_light.h
-        src/tests/test_batch_render.cpp
-        src/tests/test_batch_render.h
-        src/LearnVulkan/Application.cpp
-        src/LearnVulkan/Application.hpp
-        src/LearnVulkan/LearnVulkan.cpp
-        src/LearnVulkan/Layer.cpp
-        src/LearnVulkan/Layer.hpp
-        src/LearnVulkan/LayerStack.cpp
-        src/LearnVulkan/LayerStack.hpp
-        src/LearnVulkan/Layers/LightLayer.cpp
-        src/LearnVulkan/Layers/LightLayer.hpp
-        src/LearnVulkan/Gui/MainPanel.cpp
-        src/LearnVulkan/Gui/MainPanel.hpp
-        src/LearnVulkan/Gui/Panel.hpp
-        src/LearnVulkan/Gui/UiSystem.cpp
-        src/LearnVulkan/Gui/UiSystem.hpp
-        src/LearnVulkan/Graphics/interface/render_type.h
-        src/LearnVulkan/Graphics/interface/rhi.h
-        src/LearnVulkan/Graphics/interface/rhi_struct.h
-        src/LearnVulkan/Graphics/interface/vulkan/vulkan_rhi.cpp
-        src/LearnVulkan/Graphics/interface/vulkan/vulkan_rhi.h
-        src/LearnVulkan/Graphics/interface/vulkan/vulkan_rhi_resource.h
-        src/LearnVulkan/Graphics/interface/vulkan/vulkan_util.cpp
-        src/LearnVulkan/Graphics/interface/vulkan/vulkan_util.h
-        src/LearnVulkan/Graphics/interface/vulkan/vulkan_vma.cpp
-        src/LearnVulkan/Graphics/Render/RenderSystem.cpp
-        src/LearnVulkan/Graphics/Render/RenderSystem.hpp
-        src/LearnVulkan/Graphics/Render/Passes/UiPass.cpp
-        src/LearnVulkan/Graphics/Render/Passes/UiPass.hpp
-)
+        src/Application.cpp
+        src/Application.hpp
+        src/LearnVulkan.cpp
+        src/Layer.cpp
+        src/Layer.hpp
+        src/LayerStack.cpp
+        src/LayerStack.hpp
+        src/Layers/LightLayer.cpp
+        src/Layers/LightLayer.hpp
+        src/Gui/MainPanel.cpp
+        src/Gui/MainPanel.hpp
+        src/Gui/Panel.hpp
+        src/Gui/UiSystem.cpp
+        src/Gui/UiSystem.hpp
+        src/Graphics/interface/render_type.h
+        src/Graphics/interface/rhi.h
+        src/Graphics/interface/rhi_struct.h
+        src/Graphics/interface/vulkan/vulkan_rhi.cpp
+        src/Graphics/interface/vulkan/vulkan_rhi.h
+        src/Graphics/interface/vulkan/vulkan_rhi_resource.h
+        src/Graphics/interface/vulkan/vulkan_util.cpp
+        src/Graphics/interface/vulkan/vulkan_util.h
+        src/Graphics/interface/vulkan/vulkan_vma.cpp
+        src/Graphics/Render/RenderSystem.cpp
+        src/Graphics/Render/RenderSystem.hpp
+        src/Graphics/Render/Passes/UiPass.cpp
+        src/Graphics/Render/Passes/UiPass.hpp
+ "src/Graphics/Render/Shader.cpp")
 
-target_include_directories(LearnOpenGL PRIVATE 
+target_include_directories(LearnVulkan PRIVATE 
     3rdparty/glfw/include 
     3rdparty/glad/include
     3rdparty/imgui
@@ -125,8 +93,8 @@ target_include_directories(glad PRIVATE
     3rdparty/glad/src
 )
 
-target_link_libraries(LearnOpenGL PRIVATE glad glfw imgui ${Vulkan_LIBRARIES})
+target_link_libraries(LearnVulkan PRIVATE glad glfw imgui ${Vulkan_LIBRARIES})
 
 if(APPLE)
-    target_link_libraries(LearnOpenGL PRIVATE "-framework OpenGL")
+    target_link_libraries(LearnVulkan PRIVATE "-framework OpenGL")
 endif()
