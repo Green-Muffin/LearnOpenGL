@@ -21,7 +21,8 @@ add_subdirectory(3rdparty/glfw)
 add_subdirectory(3rdparty/glm)
 
 add_library(glad STATIC 3rdparty/glad/src/glad.c
-        3rdparty/stb/stb_image.cpp "src/Graphics/Render/Shader.cpp")
+        3rdparty/stb/stb_image.cpp
+)
 
 add_library(imgui STATIC
         3rdparty/imgui/imgui.cpp
@@ -32,7 +33,7 @@ add_library(imgui STATIC
         3rdparty/imgui/backends/imgui_impl_glfw.cpp
         3rdparty/imgui/backends/imgui_impl_opengl3.cpp
         3rdparty/imgui/backends/imgui_impl_vulkan.cpp
- "src/Graphics/Render/Shader.cpp")
+)
 
 target_include_directories(imgui PUBLIC
         3rdparty/imgui
@@ -56,6 +57,8 @@ add_executable(LearnVulkan
         src/LayerStack.hpp
         src/Layers/LightLayer.cpp
         src/Layers/LightLayer.hpp
+        src/Layers/TestVulkanLayer.cpp
+        src/Layers/TestVulkanLayer.hpp
         src/Gui/MainPanel.cpp
         src/Gui/MainPanel.hpp
         src/Gui/Panel.hpp
@@ -74,7 +77,20 @@ add_executable(LearnVulkan
         src/Graphics/Render/RenderSystem.hpp
         src/Graphics/Render/Passes/UiPass.cpp
         src/Graphics/Render/Passes/UiPass.hpp
- "src/Graphics/Render/Shader.cpp")
+        src/Graphics/Render/Shader.cpp
+        src/Graphics/Render/Shader.hpp
+        src/Graphics/Render/Texture.cpp
+        src/Graphics/Render/Texture.hpp
+        src/Graphics/Render/Renderer.cpp
+        src/Graphics/Render/Renderer.hpp
+        src/Graphics/Render/RenderGraph.cpp
+        src/Graphics/Render/RenderGraph.hpp
+        src/Graphics/Render/RenderResource.cpp
+        src/Graphics/Render/RenderResource.hpp
+        src/Graphics/Render/RenderStage.cpp
+        src/Graphics/Render/RenderStage.hpp
+        src/Graphics/Render/RenderType.hpp
+)
 
 target_include_directories(LearnVulkan PRIVATE 
     3rdparty/glfw/include 

@@ -4,7 +4,7 @@
 
 #include "UiPass.hpp"
 
-#include "LearnVulkan/Graphics/interface/vulkan/vulkan_rhi.h"
+#include "Graphics/interface/vulkan/vulkan_rhi.h"
 
 #include <stdexcept>
 

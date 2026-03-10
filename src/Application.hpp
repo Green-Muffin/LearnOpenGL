@@ -8,6 +8,7 @@
 
 #include "Graphics/Render/RenderSystem.hpp"
 #include "Gui/UiSystem.hpp"
+#include "LayerStack.hpp"
 
 #define GLFW_INCLUDE_VULKAN
 #include "GLFW/glfw3.h"
@@ -20,16 +21,24 @@ namespace LearnVulkan {
 
 	class Application {
 	public:
+		std::unique_ptr<RenderSystem> renderSystem;
+
 		Application();
 		~Application();
 
 		void run();
 
+		static Application& self();
+
 	private:
+		static Application* instance_;
+
 		GLFWwindow* _nativeWindow{ nullptr };
-		std::unique_ptr<RenderSystem> _renderSystem;
 		std::unique_ptr<UiSystem> _uiSystem;
 
+		LayerStack _layerStack;
+
+		float _lastTime{ 0.0f };
 		uint32_t _windowWidth{ 1200 };
 		uint32_t _windowHeight{ 900 };
 
@@ -38,10 +47,12 @@ namespace LearnVulkan {
 		void initWindow();
 		void initRender();
 		void initImGui();
+		void initLayers();
 
 		void cleanupWindow();
 		void cleanupRender();
 		void cleanupImGui();
+		void cleanupLayers();
 	};
 
 

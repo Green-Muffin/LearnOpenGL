@@ -1113,7 +1113,7 @@ namespace gfx
     {
         RHIImage* depth_image = VK_NULL_HANDLE;
         RHIImageView* depth_image_view = VK_NULL_HANDLE;
-        RHIFormat        depth_image_format;
+        RHIFormat        depthImageFormat;
     };
 
     struct QueueFamilyIndices

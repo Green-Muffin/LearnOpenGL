@@ -6,6 +6,8 @@
 
 #include "Graphics/interface/vulkan/vulkan_rhi.h"
 
+#include "Layers/TestVulkanLayer.hpp"
+
 #include <array>
 #include <filesystem>
 #include <fstream>
@@ -14,30 +16,45 @@
 
 namespace LearnVulkan {
 
+	Application* Application::instance_ = nullptr;
+
 	Application* createApplication() {
 		return new Application();
 	}
 
 	Application::Application() {
+		if (instance_) {
+			std::runtime_error("Application instance already exists!");
+		}
+
+		instance_ = this;
+
 		initWindow();
 		initImGui();
 		initRender();
+		initLayers();
 	}
 
 	Application::~Application() {
 		cleanupRender();
 		cleanupImGui();
 		cleanupWindow();
+		cleanupLayers();
+	}
+
+	Application& Application::self() {
+		return *instance_;
 	}
 
 	void Application::run() {
 		while (!glfwWindowShouldClose(_nativeWindow)) {
-			_renderSystem->drawFrame();
 			glfwPollEvents();
-		}
 
-		if (_renderSystem->_rhi && _renderSystem->_rhi->getGraphicsQueue()) {
-			_renderSystem->_rhi->queueWaitIdle(_renderSystem->_rhi->getGraphicsQueue());
+			const float currentTime = static_cast<float>(glfwGetTime());
+			const float deltaTime = currentTime - _lastTime;
+			_layerStack.onLogicTick(deltaTime);
+			_layerStack.onrenderTick();
+			_lastTime = currentTime;
 		}
 	}
 
@@ -59,13 +76,18 @@ namespace LearnVulkan {
 	}
 	
 	void Application::initRender() {
-		_renderSystem = std::make_unique<RenderSystem>();
-		_renderSystem->initialize(_nativeWindow);
+		renderSystem = std::make_unique<RenderSystem>();
+		RenderSystemInitInfo initInfo{ _nativeWindow, _windowWidth, _windowHeight };
+		renderSystem->initialize(initInfo);
 	}
 
 	void Application::initImGui() {
 		_uiSystem = std::make_unique<UiSystem>();
 	    _uiSystem->initialize();
+	}
+
+	void Application::initLayers() {
+		_layerStack.pushLayer(new TestVulkanLayer("TestVulkanLayer"));
 	}
 
 	void Application::cleanupWindow() {
@@ -77,11 +99,15 @@ namespace LearnVulkan {
 	}
 
 	void Application::cleanupRender() {
-		_renderSystem->shutdown();
+		renderSystem->shutdown();
 	}
 
 	void Application::cleanupImGui() {
 		_uiSystem->shutdown();
+	}
+
+	void Application::cleanupLayers() {
+		_layerStack.clearLayers();
 	}
 
 } // LearnVulkan

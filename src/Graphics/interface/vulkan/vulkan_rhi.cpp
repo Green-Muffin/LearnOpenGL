@@ -3158,7 +3158,7 @@ namespace gfx
     {
         vkDestroyShaderModule(m_device, ((VulkanShader*)shaderModule)->getResource(), nullptr);
 
-        delete(shaderModule);
+        //delete(shaderModule);
     }
 
     void VulkanRHI::destroySemaphore(RHISemaphore* semaphore)
@@ -3608,7 +3608,7 @@ namespace gfx
     RHIDepthImageDesc VulkanRHI::getDepthImageInfo() const
     {
         RHIDepthImageDesc desc;
-        desc.depth_image_format = m_depth_image_format;
+        desc.depthImageFormat = m_depth_image_format;
         desc.depth_image_view = m_depth_image_view;
         desc.depth_image = m_depth_image;
         return desc;
